@@ -1,9 +1,14 @@
 package scraper
 
 type Pokemon struct {
+	// Original url page.
+	Url string `json:"url"`
 
 	// Pokemon name.
 	Name string `json:"name"`
+
+	// Image url.
+	Image string `json:"image"`
 
 	// National number.
 	National string `json:"national"`

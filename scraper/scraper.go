@@ -84,6 +84,8 @@ func (sc *Scrapemon) ScrapePokemons() {
 
 				c.OnHTML("main#main", func(main *colly.HTMLElement) {
 					pokemon.Name = main.ChildText("h1")
+					pokemon.Url = url
+					pokemon.Image = main.ChildAttr("a[rel='lightbox']", "href")
 
 					main.ForEach("table.vitals-table tbody tr", func(_ int, elem *colly.HTMLElement) {
 						key := strings.TrimSpace(elem.ChildText("th"))
