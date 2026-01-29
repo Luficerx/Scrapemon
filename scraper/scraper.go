@@ -5,6 +5,7 @@ import (
 	"Scrapemon/simpbar"
 	"encoding/json"
 	"log"
+	"sort"
 	"strconv"
 	"strings"
 	"sync"
@@ -226,6 +227,8 @@ func (sc *Scrapemon) ScrapePokemons() {
 }
 
 func (sc *Scrapemon) DumpPokemons() {
+	sort.SliceStable(sc.pokemons, func(i, j int) bool { return sc.pokemons[i].Name < sc.pokemons[j].Name })
+
 	bytes, err := json.MarshalIndent(sc.pokemons, "", "  ")
 	if err != nil {
 		log.Fatal(err)
