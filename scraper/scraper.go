@@ -2,6 +2,7 @@ package scraper
 
 import (
 	"Scrapemon/dump"
+	"Scrapemon/simpbar"
 	"encoding/json"
 	"log"
 	"strconv"
@@ -66,6 +67,8 @@ func (sc *Scrapemon) ScrapePokemonWebsite() {
 
 func (sc *Scrapemon) ScrapePokemons() {
 	var mu sync.Mutex
+
+	bar := simpbar.SimpbarInt(sc.found_urls)
 
 	for _, array := range sc.urls {
 		var wg sync.WaitGroup
@@ -204,8 +207,10 @@ func (sc *Scrapemon) ScrapePokemons() {
 
 				c.Visit(url)
 				c.Wait()
+
 				mu.Lock()
 				sc.pokemons = append(sc.pokemons, pokemon)
+				bar.Add(1)
 				mu.Unlock()
 
 			}(i, url)
